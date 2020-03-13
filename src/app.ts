@@ -1,8 +1,8 @@
-import { ReferenceItem, UniversityLibrarian, RefBook } from './classes';
-import { Category } from './enums';
-import { Book, Logger, Author, Librarian} from './intefaces';
-import { PersonBook } from './types';
-import { getAllBooks } from './functions';
+import {Category} from './enums';
+import {Book, Logger} from './intefaces';
+import {BookRequiredFields, UpdatedBook, CreateCustomerFunctionType} from './types';
+import {createCustomer} from './functions';
+import {UniversityLibrarian} from './classes';
 
 showHello('greeting', 'TypeScript');
 
@@ -112,11 +112,11 @@ logDamage('missing back cover');
 // console.log(ref.publisher);
 
 // Task 05.02
-const refBook = new refBook('Title', 2020, 10);
-console.log(refBook);
-refBook.printItem();
-refBook.publisher = 'abc';
-console.log(refBook.publisher);
+// const refBook = new refBook('Title', 2020, 10);
+// console.log(refBook);
+// refBook.printItem();
+// refBook.publisher = 'abc';
+// console.log(refBook.publisher);
 
 // Task 05.03
 // const refBook = new Encyclopedia('Title', 2020, 10);
@@ -144,9 +144,71 @@ console.log(refBook.publisher);
 
 
 // Task 06.05
-import ('./classes').then(module => {
-    const reader = new module.Reader();
-    console.log(reader);
-    reader.name = 'Anna';
-    reader.
-});
+// import ('./classes').then(module => {
+//     const reader = new module.Reader();
+//     console.log(reader);
+//     reader.name = 'Anna';
+//     reader.});
+
+//===================================================================
+// Task 07.01
+const inventory: Book[] = [
+    { id: 10, title: 'The C Programming Language', author: 'K & R', available: true, category: Category.Software },
+    { id: 11, title: 'Code Complete', author: 'Steve McConnell', available: true, category: Category.Software },
+    { id: 12, title: '8-Bit Graphics with Cobol', author: 'A. B.', available: true, category: Category.Software },
+    { id: 13, title: 'Cool autoexec.bat Scripts!', author: 'C. D.', available: true, category: Category.Software }
+];
+// console.log(purge(inventory));
+// console.log(purge([1, 2, 3]));
+
+// Task 07.02
+// const bookshelf: Shelf<Book> = new Shelf<Book>();
+// inventory.forEach(book => bookshelf.add(book));
+// const firstBook = bookshelf.getFirst();
+// console.log(firstBook);
+//
+// const mazazines: Mazazine[] = [
+//     { title: 'Programming Language Monthly', publisher: 'Code Mags' },
+//     { title: 'Literary Fiction Quarterly', publisher: 'College Press' },
+//     { title: 'Five Points', publisher: 'GSU' }
+// ];
+
+// const magazineShelf = new Shelf<Mazazine>();
+// mazazines.forEach(mag => magazineShelf.add(mag));
+// const firstMag = magazineShelf.getFirst();
+// console.log(firstMag);
+
+// Task 07.03
+// magazineShelf.printTitles();
+// const result = magazineShelf.find('Five Points');
+// console.log(result);
+
+// Task 07.04
+// const book: BookRequiredFields = {
+//     id:1,
+//     title: '',
+//     author: 'Unknown',
+//     available: false,
+//     category: Category.TypeScript,
+//     markedDamaged: null,
+//     pages: 300
+// };
+//
+// const updatedBook: UpdatedBook = {
+//     id: 1,
+//     title: 'Refactoring JavaScript'
+// };
+//
+// const params: Parameters<CreateCustomerFunctionType> = ['Anna'];
+// createCustomer(...params);
+
+//===================================================================
+// Task 08.01
+
+const o = new UniversityLibrarian();
+console.log(o);
+
+// Task 08.02
+
+o.name = 'Sergey';
+(o as any).printLibrarian();

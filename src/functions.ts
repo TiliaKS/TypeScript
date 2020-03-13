@@ -148,3 +148,7 @@ export function getBookProp(book: Book, prop: BookProperties) {
     }
     return book[prop];
 }
+
+export   function purge<T>(invertory: Array<T>): Array<T> {
+    return invertory.slice(2)
+}
