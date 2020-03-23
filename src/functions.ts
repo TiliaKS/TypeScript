@@ -1,9 +1,9 @@
-import { BookOrUndefined, BookProperties } from './types';
-import { Book } from './intefaces';
-import { Category } from './enums';
+import {BookOrUndefined, BookProperties} from './types';
+import {Book, LibMgrCallback} from './intefaces';
+import {Category} from './enums';
 
 export function getAllBooks(): readonly Book[] {
-    const books:readonly Book[] = <const>[
+    const books: readonly Book[] = <const>[
         {id: 1, title: 'Refactoring JavaScript', author: 'Evan Burchard', available: true, category: Category.JavaScript},
         {id: 2, title: 'JavaScript Testing', author: 'Liang Yuxian Eugene', available: false, category: Category.JavaScript},
         {id: 3, title: 'CSS Secrets', author: 'Lea Verou', available: true, category: Category.CSS},
@@ -27,7 +27,7 @@ export function logFirstAvailable(books: readonly object[] = getAllBooks()): voi
     console.log(`First Available Book ${firstBookTitle}`);
 }
 
-export function getBookTitleByCategory(category?: Category.JavaScript): Array<string> {
+export function getBookTitleByCategory(category?: Category): Array<string> {
     const books = getAllBooks() as any[];
     const titles: string[] = [];
 
@@ -64,7 +64,7 @@ export function getBookAuthorByIndex(index: number): [string, string] {
 //     }, 0n)
 // }
 
-export function getBookById(id: number): BookOrUndefined{
+export function getBookById(id: number): BookOrUndefined {
     const books = getAllBooks();
     return books.find((book: Book) => book.id === id);
 }
@@ -143,12 +143,57 @@ export function printBook(book: Book): void {
 }
 
 export function getBookProp(book: Book, prop: BookProperties) {
-    if(typeof book[prop] === 'function') {
+    if (typeof book[prop] === 'function') {
         return (book[prop] as Function).name;
     }
     return book[prop];
 }
 
-export   function purge<T>(invertory: Array<T>): Array<T> {
+export function purge<T>(invertory: Array<T>): Array<T> {
     return invertory.slice(2)
+}
+
+export function getBooksByCategory(category: Category, callback: LibMgrCallback): void {
+
+    setTimeout(() => {
+        try {
+            const titles: string[] = getBookTitleByCategory(category);
+            if (titles.length > 0) {
+                callback(null, titles);
+            } else {
+                throw new Error('No Books Found')
+            }
+        } catch (error) {
+            callback(error, null)
+        }
+    }, 2000);
+}
+
+
+export function logCategorySearch(err: Error, titles: string[]): void {
+    if (err) {
+        console.log(`Error message: ${err.message}`)
+    } else {
+        console.log(titles);
+    }
+}
+
+export function getBooksByCategoryPromise(category: Category): Promise<string[]> {
+
+    return new Promise<string[]>((resolve, reject) => {
+        setTimeout(() => {
+
+            const titles: string[] = getBookTitleByCategory(category);
+            if (titles.length > 0) {
+                resolve(titles);
+            } else {
+                reject('No Books Found');
+            }
+        }, 2000);
+    });
+}
+
+export async function logSearchResults(category: Category): Promise<any> {
+    const numberOfBooks = await getBooksByCategoryPromise(category);
+    console.log(numberOfBooks.length);
 }

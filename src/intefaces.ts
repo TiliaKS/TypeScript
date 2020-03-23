@@ -42,4 +42,9 @@ interface Mazazine {
 interface ShelfItem {
     title: string;
 }
-export {Book, DamageLogger as Logger, Person, Mazazine, Author, Librarian, ShelfItem}
+
+interface LibMgrCallback {
+    (err: Error, titles: string[]): void;
+}
+
+export {Book, LibMgrCallback, DamageLogger as Logger, Person, Mazazine, Author, Librarian, ShelfItem}
